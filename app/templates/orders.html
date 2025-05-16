@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-5">Заказы</h1>
+
+    <!-- Статистика -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Общее количество заказов</h5>
+                    <p class="card-text">{{ stats.total_orders }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Общая сумма заказов</h5>
+                    <p class="card-text">{{ stats.total_amount }} руб.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Средняя сумма заказа</h5>
+                    <p class="card-text">{{ stats.average_amount }} руб.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Список заказов -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Клиент</th>
+                <th>Telegram ID</th>
+                <th>Способ оплаты</th>
+                <th>Способ доставки</th>
+                <th>Адрес</th>
+                <th>Дата</th>
+                <th>Товары</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.customer_name }}</td>
+                <td>{{ order.telegram_id }}</td>
+                <td>{{ order.payment_method }}</td>
+                <td>{{ order.delivery_method }}</td>
+                <td>{{ order.address }}</td>
+                <td>{{ order.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>
+                    <ul>
+                        {% for item in order.items %}
+                        <li>
+                            {% if item.product %}
+                                {{ item.product.name }} ({{ item.quantity }} шт.)
+                                {% if item.product.image %}
+                                    <br><img src="{{ url_for('static', filename='uploads/' + item.product.image) }}" alt="{{ item.product.name }}" width="50">
+                                {% endif %}
+                            {% else %}
+                                Товар удален (ID: {{ item.product_id }})
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

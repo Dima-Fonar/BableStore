@@ -1,0 +1,32 @@
+# Python-specific ignores
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env
+
+# PyCharm project files
+.idea/
+
+# Database files (if using SQLite)
+*.db
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Uploads directory (if you don't want to track user-uploaded files)
+app/uploads/
+
+# Sensitive configuration files (if they contain secrets like API tokens)
+config.py
+
+# macOS-specific files
+.DS_Store
+
+# Other common ignores
+*.swp
+*.swo
